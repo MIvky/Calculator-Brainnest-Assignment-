@@ -89,6 +89,7 @@ body {
 }
 
 .equal {
-  grid-column: 2/4;
   background-color: orangered;
 }
+
+

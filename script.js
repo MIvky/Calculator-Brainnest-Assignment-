@@ -31,6 +31,11 @@ function operate(operator, num1, num2) {
   }
 }
 
+const processNumString = function (str) {
+  const floatNum = parseFloat(str);
+  return floatNum % 1 === 0 ? floatNum.toFixed(0) : floatNum.toFixed(1);
+};
+
 const numberKeys = document.querySelectorAll('.number');
 const operatorKeys = document.querySelectorAll('.operator');
 let output = document.querySelector('.output');
@@ -52,7 +57,7 @@ function init() {
 
 function updateDisplay(e) {
   displayValue += e.target.textContent;
-  output.innerHTML = displayValue;
+  output.innerHTML = processNumString(displayValue);
   if (isOperatorPressed) {
     number2 = e.target.textContent;
     displayValue = operate(operation, number1, number2);
@@ -84,6 +89,10 @@ equalButton.addEventListener('click', () => {
   number2 =
     number2 || displayValue.replace(number1, '').match(/[^\+|\-|\*|\/]\d*/);
   result = operate(operation, number1, number2);
+  if (result === undefined) {
+    output.innerHTML = '0';
+    return;
+  }
   output.innerHTML = result % 1 ? Number(result.toFixed(4)) : result;
   operation = '';
 });
